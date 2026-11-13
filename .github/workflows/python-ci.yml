@@ -15,4 +15,6 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: python -m py_compile agent.py app.py
+      - run: python -m py_compile agent.py app.py weather.py
+      - run: python -m pip install requests
+      - run: python -m unittest -v test_weather
