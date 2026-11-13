@@ -18,10 +18,18 @@ def get_weather(city: str) -> str:
     """Get current weather of a city"""
     
     api_key = os.getenv("OPENWEATHER_API_KEY")
-    url = f"http://api.openweathermap.org/data/2.5/weather?q={city},IN&appid={api_key}&units=metric"
-    
-    response = requests.get(url)
-    data = response.json()
+    if not api_key:
+        return "Error: weather service is not configured"
+    try:
+        response = requests.get(
+            "https://api.openweathermap.org/data/2.5/weather",
+            params={"q": f"{city},IN", "appid": api_key, "units": "metric"},
+            timeout=10,
+        )
+        response.raise_for_status()
+        data = response.json()
+    except (requests.RequestException, ValueError):
+        return "Error: weather service unavailable"
     
     if str(data.get("cod")) != "200":
         return f"Error: {data.get('message', 'Could not fetch weather')}"
