@@ -25,3 +25,21 @@ The weather tool currently targets Indian cities. Verify source URLs and timesta
 ## Evaluation
 
 Test weather-only, news-only, combined and ambiguous queries, invalid cities, provider timeouts and missing credentials. Record tool-call accuracy and latency before claiming performance.
+
+## Repository overview
+
+Tool-calling AI agent for Indian city weather and recent news using Groq, Tavily and OpenWeather.
+
+**Suggested GitHub topics:** `ai-agents` `tool-calling` `groq` `tavily` `openweather` `langchain` `streamlit`.
+
+## System architecture
+
+```mermaid
+flowchart LR
+  User --> Agent[LangChain agent]
+  Agent --> Weather[OpenWeather]
+  Agent --> News[Tavily]
+  Weather --> Agent
+  News --> Agent
+  Agent --> Briefing
+```
